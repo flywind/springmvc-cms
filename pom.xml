@@ -1,0 +1,272 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.uxdpen</groupId>
+  <artifactId>springmvc-cms</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>springmvc-cms Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+  	<spring.version>4.0.3.RELEASE</spring.version>
+	<hibernate.version>4.3.5.Final</hibernate.version>
+	<junit.version>4.11</junit.version>
+	<mysql.connector.version>5.1.30</mysql.connector.version>
+	<com.alibaba.druid.version>1.0.0</com.alibaba.druid.version>
+	<org.aspectj.aspectjweaver.verison>1.7.4</org.aspectj.aspectjweaver.verison>
+	<shiro.version>1.2.2</shiro.version>
+	<jstl.version>1.2</jstl.version>
+	<slf4j.log4j12.verison>1.7.5</slf4j.log4j12.verison>
+	<dom4j.version>1.6.1</dom4j.version>
+	<jaxen.version>1.1.4</jaxen.version>
+	<commons.dbutils.verison>1.5</commons.dbutils.verison>
+	<commons.lang3.version>3.3.1</commons.lang3.version>
+	<fastjson.verison>1.1.37</fastjson.verison>
+  </properties>
+  <dependencies>
+    <dependency>
+	    <groupId>junit</groupId>
+	    <artifactId>junit</artifactId>
+	    <version>${junit.version}</version>
+	    <scope>test</scope>
+	</dependency>
+	<dependency>
+	    <groupId>commons-collections</groupId>
+	    <artifactId>commons-collections</artifactId>
+	    <version>3.2.1</version>
+	</dependency>
+	<!-- 加入shiro权限依赖包 -->
+	<dependency>
+	    <groupId>org.apache.shiro</groupId>
+	    <artifactId>shiro-core</artifactId>
+	    <version>${shiro.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.apache.shiro</groupId>
+	    <artifactId>shiro-ehcache</artifactId>
+	    <version>${shiro.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.apache.shiro</groupId>
+	    <artifactId>shiro-web</artifactId>
+	    <version>${shiro.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.apache.shiro</groupId>
+	    <artifactId>shiro-quartz</artifactId>
+	    <version>${shiro.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.apache.shiro</groupId>
+	    <artifactId>shiro-spring</artifactId>
+	    <version>${shiro.version}</version>
+	</dependency>
+	
+	<!-- 加入mysql驱动依赖包 -->
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>${mysql.connector.version}</version>
+	</dependency>
+	<!-- 加入druid数据源依赖包 -->
+	<dependency>
+		<groupId>com.alibaba</groupId>
+		<artifactId>druid</artifactId>
+		<version>${com.alibaba.druid.version}</version>
+	</dependency>
+	<!-- aspectj相关jar包-->
+	<dependency>
+	    <groupId>org.aspectj</groupId>
+	    <artifactId>aspectjrt</artifactId>
+	    <version>${org.aspectj.aspectjweaver.verison}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.aspectj</groupId>
+		<artifactId>aspectjweaver</artifactId>
+		<version>${org.aspectj.aspectjweaver.verison}</version>
+	</dependency>
+	
+	
+	<!-- ehcache需要的依赖 -->
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-context-support</artifactId>
+	    <version>${spring.version}</version>
+	</dependency>
+	
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-tx</artifactId>
+	    <version>${spring.version}</version>
+	</dependency>
+	
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-webmvc</artifactId>
+	    <version>${spring.version}</version>
+	</dependency>
+	
+	<!-- 加入orm依赖包 -->
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-orm</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<!-- 加入spring测试依赖包 -->
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-test</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	
+	<!-- 加入hibernate依赖包 -->
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-core</artifactId>
+		<version>${hibernate.version}</version>
+	</dependency>
+	<!-- 加入hibernate-ehcache依赖包 -->
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-ehcache</artifactId>
+		<version>${hibernate.version}</version>
+	</dependency>
+	
+	
+	<dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>javax.servlet-api</artifactId>
+	    <version>3.0.1</version>
+	    <scope>provided</scope>
+	</dependency>
+	<dependency>
+	    <groupId>javax.servlet.jsp</groupId>
+	    <artifactId>jsp-api</artifactId>
+	    <version>2.2</version>
+	</dependency>
+	<!-- 加入dom4j依赖包 -->
+	<dependency>
+		<groupId>dom4j</groupId>
+		<artifactId>dom4j</artifactId>
+		<version>${dom4j.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>jaxen</groupId>
+		<artifactId>jaxen</artifactId>
+		<version>${jaxen.version}</version>
+	</dependency>
+	<!-- 加入jstl依赖包 -->
+	<dependency>
+		<groupId>jstl</groupId>
+		<artifactId>jstl</artifactId>
+		<version>${jstl.version}</version>
+	</dependency>
+	<!-- 加入slf4j依赖包 -->
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-log4j12</artifactId>
+		<version>${slf4j.log4j12.verison}</version>
+	</dependency>
+	<!-- dbutils依赖包 -->
+	<dependency>
+		<groupId>commons-dbutils</groupId>
+		<artifactId>commons-dbutils</artifactId>
+		<version>${commons.dbutils.verison}</version>
+	</dependency>
+	<!-- 添加MongoDB数据库驱动包 -->
+	<dependency>
+        <groupId>org.mongodb</groupId>
+        <artifactId>mongo-java-driver</artifactId>
+        <version>3.0.4</version>
+   	</dependency>
+   	<!-- 加入spring data redis依赖包 -->
+	<dependency>
+		<groupId>org.springframework.data</groupId>
+		<artifactId>spring-data-redis</artifactId>
+		<version>1.1.1.RELEASE</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>redis.clients</groupId>
+		<artifactId>jedis</artifactId>
+		<version>2.1.0</version>
+	</dependency>
+	<!-- 发短信的服务包 -->
+	<dependency>
+		<groupId>commons-httpclient</groupId>
+		<artifactId>commons-httpclient</artifactId>
+		<version>3.1</version>
+	</dependency>
+	<!-- java邮件服务包 -->
+   	<dependency>
+	    <groupId>com.sun.mail</groupId>
+	    <artifactId>javax.mail</artifactId>
+	    <version>1.5.2</version>
+	</dependency>
+	<!-- 加入commons-lang3依赖包 -->
+	<dependency>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-lang3</artifactId>
+		<version>${commons.lang3.version}</version>
+	</dependency>
+	<!-- 加入fastjson依赖包  start-->
+	<dependency>
+		<groupId>com.alibaba</groupId>
+		<artifactId>fastjson</artifactId>
+		<version>${fastjson.verison}</version>
+	</dependency>
+	<!-- 加入fastjson依赖包  end-->
+	
+	
+  </dependencies>
+  <build>
+    <finalName>springmvc-cms</finalName>
+    <plugins>
+    	<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>2.3.2</version>
+            <configuration>
+                <source>1.7</source>
+                <target>1.7</target>
+                <optimize>true</optimize>
+            </configuration>
+        </plugin>
+
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.7.2</version>
+        </plugin>
+        <!-- Run the application using "mvn jetty:run" -->
+        <plugin>
+            <groupId>org.mortbay.jetty</groupId>
+            <artifactId>maven-jetty-plugin</artifactId>
+            <version>6.1.16</version>
+            <configuration>
+            	<connectors>
+					<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+						<port>8088</port>
+					</connector>
+				</connectors>
+                <!-- Log to the console. -->
+                <requestLog implementation="org.mortbay.jetty.NCSARequestLog">
+                    <!-- This doesn't do anything for Jetty, but is a workaround for a Maven bug
+                         that prevents the requestLog from being set. -->
+                    <append>true</append>
+                </requestLog>
+            </configuration>
+        </plugin>
+
+        <plugin>
+            <groupId>org.apache.tomcat.maven</groupId>
+            <artifactId>tomcat7-maven-plugin</artifactId>
+            <version>2.2</version>
+            <configuration>
+                <path>/${project.build.finalName}</path>
+            </configuration>
+
+        </plugin>
+    </plugins>
+  </build>
+</project>
