@@ -2,8 +2,14 @@ package com.uxdpen.cms.business.entities.sys;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import com.uxdpen.cms.business.entities.base.FBase;
 
@@ -25,6 +31,8 @@ public class User extends FBase{
     /**
      * User name
      */
+	//@NotNull(message="用户名不能为空")
+	//@Size(min=1, max=16, message="用户名长度为1-16字符")
     private String username;
     
     /**
@@ -35,6 +43,8 @@ public class User extends FBase{
     /**
      * Password
      */
+    //@NotNull(message="密码不能为空")  
+   // @Size(min=1, max=25, message="密码长度为1-25字符")  
     private String password; 
     
     /**
@@ -50,6 +60,7 @@ public class User extends FBase{
     /**
      * Email
      */
+    //@Pattern(regexp="^[0-9a-zA-Z]{1,}@[0-9a-zA-Z]{1,}\\.(com|cn)$", message="邮箱格式不正确") 
     private String email;
     
     /**

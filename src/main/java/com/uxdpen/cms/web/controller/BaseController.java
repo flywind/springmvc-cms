@@ -46,7 +46,7 @@ public class BaseController {
 				systemSetingService.querySysSetingByCustomerCode(currentUser.getCustomerCode()));
 
 		// 当前用户
-		model.addAttribute("user", currentUser);
+		model.addAttribute("currentUser", currentUser);
 
 		String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 				+ request.getServletPath();

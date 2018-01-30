@@ -7,6 +7,19 @@
 }(function($,undefined, detailview) {
 	var Common = {};
 	
+	/* 跳转 */
+    Common.jump = function(url, target) {
+        if (!url) {
+            return;
+        }
+
+        if (target) {
+            window.open(url, target);
+        } else {
+            location.href = url;
+        }
+    };
+	
 	/* 警告框  */
 	Common.alert = function(message, parentElement, type){
 		message = message || '提示信息的内容';

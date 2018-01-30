@@ -48,34 +48,34 @@ overflow: auto;
 									<div class="form-group">
 										<label class="col-sm-3 control-label">用户名<span class="text-danger">*</span></label>
 										<div class="col-sm-6">
-											<input class="form-control" type="text" placeholder="用户名" id="username" name="username"/>
+											<input class="form-control" type="text" placeholder="用户名" id="username" name="username" value="${user.username}"/>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="col-sm-3 control-label">员工姓名<span class="text-danger">*</span></label>
 										<div class="col-sm-6">
-											<input class="form-control" type="text" placeholder="员工姓名" id="name" name="name"/>
+											<input class="form-control" type="text" placeholder="员工姓名" id="name" name="name" value="${user.name}"/>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="col-sm-3 control-label">单位名称<span class="text-danger">*</span></label>
 										<div class="col-sm-6">
-											<input type="hidden" id="companyId" name="companyId" />
-											<input class="form-control b-white" readonly="readonly" type="text" placeholder="单位名称" id="companyName" name="companyName"/>
+											<input type="hidden" id="companyId" name="companyId" value="${user.companyId}"/>
+											<input class="form-control b-white" readonly="readonly" type="text" placeholder="单位名称" id="companyName" name="companyName" value="${user.companyName}"/>
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="col-sm-3 control-label">手机号码<span class="text-danger">*</span></label>
 										<div class="col-sm-6">
-											<input class="form-control" type="text" placeholder="手机号码" id="mobile" name="mobile"/>
+											<input class="form-control" type="text" placeholder="手机号码" id="mobile" name="mobile" value="${user.mobile}"/>
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="col-sm-3 control-label">邮箱<span class="text-danger">*</span></label>
 										<div class="col-sm-6">
-											<input class="form-control" type="text" placeholder="邮箱" id="email" name="email" />
+											<input class="form-control" type="text" placeholder="邮箱" id="email" name="email" value="${user.email}"/>
 										</div>
 									</div>
 									<!-- <div class="form-group">
@@ -92,8 +92,8 @@ overflow: auto;
 									<div class="form-group">
 										<label class="col-sm-3 control-label">角色<span class="text-danger">*</span></label>
 										<div class="col-sm-6">
-											<input class="form-control b-white" readonly="readonly" type="text" placeholder="角色" id="roles" name="roles"/>
-											<input type="hidden" id="roleIds" name="roleIds" />
+											<input class="form-control b-white" readonly="readonly" type="text" placeholder="角色" id="roles" name="roles" value="${user.roleNames}"/>
+											<input type="hidden" id="roleIds" name="roleIds"/>
 										</div>
 									</div>
 									<div class="form-group">
@@ -139,7 +139,8 @@ overflow: auto;
 					
 					var setting = {
 		                view: {
-		                    dblClickExpand: false
+		                    dblClickExpand: false,
+		                    selectedMulti: false
 		                },
 		                data: {
 		                    simpleData: {
@@ -157,15 +158,37 @@ overflow: auto;
 						async:true,
 						cache:true,
 						success:function(spec){
-							spec = eval(spec);
 							var arr = new Array();
+							spec = eval(spec);
+							var openParentIds =new Array();
+					          
+				            $.each(spec,function(i,o){
+				            	  var selectedIdObj = $("#companyId");
+				                  var selectedId=selectedIdObj.val();
+				                if(selectedId==o.id){
+				                	var str=o.parentIds;
+				                	openParentIds=str.split("/");
+				                }
+				            })
 							$.each(spec,function(i,o){
-								var item = { id:o.id, pId:o.parentId, name:o.name, open:o.rootNode};
+								var has=false;
+								$.each(openParentIds,function(i,parentId){
+									if(o.id==parentId){
+										has=true;
+									}
+								})
+				                var item=null;
+				                if(has){
+				                   item = { id:o.id, pId:o.parentId, name:o.name, open:true};
+				                }else{ 
+				                   item = { id:o.id, pId:o.parentId, name:o.name, open:o.rootNode};  
+				                }
+								
 								arr[i] = item;
 							})
 				
 				            $.fn.zTree.init($("#tree"), setting, arr);
-				            $('#companyName').focus(showMenu);
+				            //$('#companyName').focus(showMenu);
 						}
 					});
 					
@@ -188,10 +211,21 @@ overflow: auto;
 		            }
 		
 		            function showMenu() {
-		                var cityObj = $("#companyName");
+		            	var cityObj = $("#companyId");
+		                 var organizationValue=cityObj.val();
+		                 var zTree = $.fn.zTree.getZTreeObj("tree");
+		                 var nodes = zTree.transformToArray(zTree.getNodes());
+		                 for(var i=0;i<nodes.length;i++)
+		                 { 
+		                	if(nodes[i].id==organizationValue){
+		                		nodes[i].checked = true;
+		                		zTree.selectNode(nodes[i],false);
+		                	}	
+		                 }
+		                var cityNameObj = $("#companyName");
 		                var cityOffset = $("#companyName").offset();
-		                $("#menuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
-		
+		                $("#menuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityNameObj.outerHeight() + "px"}).slideDown("fast");
+
 		                $("body").bind("mousedown", onBodyDown);
 		            }
 		            function hideMenu() {
@@ -228,7 +262,7 @@ overflow: auto;
 				
 					$.ajax({
 						type:"post",
-						url:"${pageContext.request.contextPath}/admin/sys/roleTree",
+						url:"${pageContext.request.contextPath}/admin/sys/roleTree/"+${user.id},
 						async:true,
 						cache:true,
 						success:function(spec){
@@ -244,7 +278,6 @@ overflow: auto;
 		            		$('input[name="roles"]').click(showMenu);
 						}
 					});
-					
 					
 		
 		            function onCheck(e, treeId, treeNode) {

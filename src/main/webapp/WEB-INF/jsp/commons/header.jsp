@@ -31,27 +31,27 @@
 						class="pull-right"> <i class="ion-person ic-user"></i>
 					</span>
 						<div class="username hidden-xs">
-							${user.username}
+							${currentUser.username}
 						</div>
 				</a>
 
 					<div
 						class="dropdown-menu dropdown-menu-lg dropdown-menu-right panel-default">
 						<div class="panel-body text-center bg-primary">
-							<img alt="${user.username}"
+							<img alt="${currentUser.username}"
 								class="img-lg img-circle img-border mar-btm"
-								src="${user.picUrl}" />
+								src="${currentUser.picUrl}" />
 							<h4 class="mar-no text-light">
 								
-						                您好, ${user.username}.
+						                您好, ${currentUser.username}.
 						               
 							</h4>
 						</div>
 						<div class="list-group bg-trans">
 							<a class="list-group-item" t:type="pagelink"
-								t:page="admin/sys/UserUpdate" t:context="${user.id}">个人信息</a> <a
+								t:page="admin/sys/UserUpdate" t:context="${currentUser.id}">个人信息</a> <a
 								class="list-group-item" t:type="pagelink"
-								t:page="admin/sys/UpdateInitPwd" t:context="${user.id}">修改密码</a>
+								t:page="admin/sys/UpdateInitPwd" t:context="${currentUser.id}">修改密码</a>
 
 						</div>
 						<div class="pad-all text-right">

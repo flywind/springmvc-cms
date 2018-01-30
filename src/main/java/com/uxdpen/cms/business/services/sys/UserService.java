@@ -142,7 +142,7 @@ public interface UserService {
      * @return
      * 			Json
      */
-    public Json  findOwnRole(User LoginUser);
+    public List<Role> findOwnRole(User LoginUser);
     
     /**
      * Inquire all the characters you created

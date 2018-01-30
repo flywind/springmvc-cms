@@ -10,6 +10,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -87,6 +88,18 @@ public class UserController extends BaseController {
     }
     
     @ResponseBody
+    @RequestMapping(value = "admin/sys/roleTree/{id}", method = RequestMethod.POST)
+    public void getUserRoleTree(@CurrentUser User curuser, @PathVariable long id, HttpServletRequest request, HttpServletResponse response){
+    	if(isUpdateLoginUser(id,curuser)){
+    		List<Role> roles = userService.findOwnRole(curuser);
+    		BaseResult.writeJson(request, response, roles, false);
+		}else{
+			List<Role> roles = userService.findAllRoles(curuser);
+			BaseResult.writeJson(request, response, roles, false);
+		}
+    }
+    
+    @ResponseBody
     @RequestMapping(value = "admin/sys/user/check", method = RequestMethod.POST)
     public void checkUsername(@CurrentUser User curuser,String username, HttpServletResponse response){
     	boolean result = userService.checkUserExist(username, curuser.getCustomerCode());
@@ -142,6 +155,7 @@ public class UserController extends BaseController {
 		String parentId = curuser.getParentId() + curuser.getId() + FBaseConstants.SLASH;
 		user.setParentId(parentId);
 		
+		//返回给前端的结果
 		DataCallback callback = new DataCallback();
 		
 		boolean check = userService.checkUserExist(user.getUsername(), curuser.getCustomerCode());
@@ -162,5 +176,35 @@ public class UserController extends BaseController {
 		
 		
     }
+    
+    @RequestMapping(value = "admin/sys/userUpdate/{id}", method = RequestMethod.GET)
+    public String getOneUser(@CurrentUser User curuser, Model model, @PathVariable Long id, HttpServletResponse response){
+    	setCommonData(model,curuser);
+    	//完善user对象
+    	userService.perfectUser(curuser);
+    	if(isUpdateLoginUser(id,curuser)){
+    		List<Role> roles = userService.findOwnRole(curuser);
+    		model.addAttribute("roles", roles);
+		}else{
+			List<Role> roles = userService.findAllRoles(curuser);
+			model.addAttribute("roles", roles);
+		}
+    	model.addAttribute("user", userService.findOne(id));
+    	return "admin/sys/userUpdate";
+    }
+    
+    public boolean isUpdateLoginUser(Long id, User curuser){
+		if(id==curuser.getId()){
+			return true;
+		}else{
+			return false;
+		}
+	}
+    
+    /*@ResponseBody
+    @RequestMapping(value = "admin/sys/user/update/{id}", method = RequestMethod.POST)
+    public void updateUser(@CurrentUser User curuser, @RequestBody Map<String,String> map, @PathVariable String id, HttpServletResponse response){
+    	
+    }*/
 
 }

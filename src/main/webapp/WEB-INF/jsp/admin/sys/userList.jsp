@@ -40,7 +40,7 @@
 									</form>
 									<div class="bars" data-action="true">
 										<a class="btn btn-success mar-pixe-r10" href="${pageContext.request.contextPath}/admin/sys/userCreate"><i class="fa fa-plus mar-pixe-r5"></i>添加 </a>
-										<button class="btn btn-info mar-pixe-r10"><i class="fa fa-pencil mar-pixe-r5"></i>编辑</button>
+										<button class="btn btn-info mar-pixe-r10" data-update="true"><i class="fa fa-pencil mar-pixe-r5"></i>编辑</button>
 										<button class="btn btn-danger mar-pixe-r10"><i class="fa fa-trash-o mar-pixe-r5"></i>删除</button>
 										<button class="btn btn-danger"><i class="fa fa-undo mar-pixe-r5"></i>重置密码</button>
 									</div>
@@ -73,7 +73,8 @@
 			page.listGrid = $('[data-grid="true"]'),
 			page.searchForm = $('[data-search-form="true"]'),
 			page.searchFormBtn = $('[data-serach-submit="true"]'),
-			page.searchFormReset = $('[data-serach-reset="true"]');
+			page.searchFormReset = $('[data-serach-reset="true"]'),
+			page.updateData = $('[data-update="true"]');
 			
 			//datagrid配置
 			page.setDataGrid = function(queryURL, queryData) {
@@ -83,6 +84,7 @@
 						sortName:"lastUpdateTime",
 						sortOrder:"desc",
 						columns:[[
+							{ field: 'checkbox',  checkbox:true },
 			                { field: 'username', title: '用户名', width: 80},
 			                { field: 'name', title: '姓名', width: 150, align: 'center'},
 			                { field: 'roleNames', title: '角色', width: 150, align: 'center'},
@@ -109,6 +111,14 @@
 			page.searchFormReset.on('click',function(e){
 				var data = {username:'',name:''};
 				page.listGrid.datagrid('load',data);
+			})
+			
+			//编辑
+			page.updateData.on('click',function(){
+				var row = page.listGrid.datagrid('getSelected');
+				if(row){
+					Common.jump('${pageContext.request.contextPath}/admin/sys/userUpdate/'+row.id);
+				}
 			})
 			
 			//datagrid宽度自适应

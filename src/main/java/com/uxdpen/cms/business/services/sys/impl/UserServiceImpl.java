@@ -312,17 +312,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Json findOwnRole(User LoginUser) {
-		Json json = new Json();
-		
+	public List<Role> findOwnRole(User LoginUser) {
 		List<UserRole>  userRoleList=userRoleDao.findRoleByUserId(LoginUser.getId());
 		List<Role> roles = new ArrayList<Role>();
 		for(UserRole userRole:userRoleList){
 			Role  role=roleDao.getById(Role.class, userRole.getRoleId());
 			roles.add(role);
 		}
-		json.setObj(roles);
-		return json;
+		return roles;
 	}
 
 }
